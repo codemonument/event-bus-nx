@@ -1,1 +1,1 @@
-export * from './lib/EventBusCore';
+export * from "./lib/event-bus";
