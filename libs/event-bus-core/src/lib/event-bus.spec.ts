@@ -37,13 +37,17 @@ describe("EventBus", () => {
     ebus.emit(demoEventInstance);
   });
 
-  it.skip("should send and receive DemoWithPayload events", (done) => {
+  it("should send and receive EventWithPayload", (done) => {
     const ebus = new EventBus();
-    const demoEventInstance = new DemoWithPayload({ name: "Bob" });
+    const payload: DemoPayload = { name: "Bob" };
+    const demoEventInstance = new EventWithPayload(payload);
 
-    ebus.on$(DemoWithPayload).pipe(take(1)).subscribe((event) => {
+    ebus.on$(EventWithPayload).pipe(take(1)).subscribe((event) => {
+      // This checks, whether the type of 'event' variable is correctly coerced by TS
+      // Since type information is removed from resulting js,
+      // we can only check the contents of event, not the shape agains the intergace DemoPayload
       expect(event.name).toStrictEqual("Bob");
-      expect(event).toBe(demoEventInstance);
+      expect(event).toBe(payload);
       done();
     });
 
