@@ -5,9 +5,11 @@ import {
   EventualPayload,
   NewableBusEvent,
 } from "../types/bus-event.type";
-import { EventBusCallback } from "./event-group-callbacks";
-import { EventBusErrorCallback } from "./event-group-error-callback";
-import { defaultErrorCallback } from "./default-error-callback";
+import {
+  defaultErrorCallback,
+  EventGroupCallback,
+  EventGroupErrorCallback,
+} from "./event-group-callbacks";
 
 /**
  * An EventBusGroup allows for using the event bus with a Callback-Interface.
@@ -21,14 +23,14 @@ export class EventBusGroup {
 
   constructor(
     private bus: EventBus,
-    private errorCallback: EventBusErrorCallback = defaultErrorCallback,
+    private errorCallback: EventGroupErrorCallback = defaultErrorCallback,
   ) {
   }
 
   /**
    * Replaces the default error callback function with a custom one
    */
-  public setDefaultErrorCallback(callback: EventBusErrorCallback): void {
+  public setDefaultErrorCallback(callback: EventGroupErrorCallback): void {
     this.errorCallback = callback;
   }
 
@@ -45,9 +47,9 @@ export class EventBusGroup {
    */
   public on<E extends BusEvent<P>, P>(
     typeFilter: NewableBusEvent<E, P>,
-    callback: EventBusCallback<P>,
+    callback: EventGroupCallback<P>,
     callbackContext: unknown = null,
-    errorCallback?: EventBusErrorCallback,
+    errorCallback?: EventGroupErrorCallback,
   ): void {
     const next = (eventPayload: EventualPayload<P>) => {
       try {
