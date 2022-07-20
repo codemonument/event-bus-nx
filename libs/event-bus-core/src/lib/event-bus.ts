@@ -23,9 +23,13 @@ export class EventBus {
     typeFilter: NewableBusEvent<E, P>,
   ): Observable<EventualPayload<P>> {
     return this.eventStream.pipe(
+      // Filters all events on the event stream and returns only these, which map the typeFilter
       filter((event: unknown): event is E => {
         return event instanceof typeFilter;
       }),
+      // Maps the events to their payloads for easier consumption
+      // Note: The return type must be EventualPayload here
+      //       to not get `P | undefined` as return type of this map
       map((event): EventualPayload<P> =>
         (event.payload !== undefined)
           ? event.payload
@@ -44,8 +48,9 @@ export class EventBus {
   }
 
   /**
-   * PLEASE BE SURE WHAT YOU DO WHEN YOU USE THIS!
-   * Return the whole eventStream as observable
+   * CAUTION: PLEASE BE SURE WHAT YOU DO WHEN YOU USE THIS!
+   *
+   * Returns the whole eventStream as observable.
    */
   public get eventStream$() {
     return this.eventStream.asObservable();
