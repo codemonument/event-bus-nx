@@ -4,11 +4,17 @@ A NX Monorepo for a typed event-bus implementation
 
 ---
 
+## Usefull Stuff
+
+- Generate a run-commands target:  
+  `nx g @nrwl/workspace:run-command --name typecheck --project event-bus-core --command "tsc --noEmit"`
+
 # Repo Log
 
 ## 2022-07-20 libs/event-bus-core
 
 1. `nx generate @nrwl/js:library --name=event-bus-core --publishable --tags=type:lib,project:event-bus-core --importPath @codemonument/event-bus-core --pascalCaseFiles --strict --config project --compiler swc --skipTypeCheck`
+2. `nx g @nrwl/workspace:run-command --name typecheck --project event-bus-core --command "tsc --noEmit" --cwd "libs/event-bus-core"`
 
 ## 2022-07-20 create-nx-workspace
 

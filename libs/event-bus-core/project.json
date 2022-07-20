@@ -40,6 +40,14 @@
         "jestConfig": "libs/event-bus-core/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "cwd": "libs/event-bus-core",
+        "command": "tsc --noEmit src/index.ts"
+      }
     }
   },
   "tags": ["type:lib", "project:event-bus-core"]
