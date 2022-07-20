@@ -1,5 +1,10 @@
-import { filter, Observable, Subject } from "rxjs";
-import { TypeDiscriminator } from "./types/type-discriminator";
+import { filter, map, Observable, Subject } from "rxjs";
+import {
+  BusEvent,
+  EventualPayload,
+  NewableBusEvent,
+} from "./types/bus-event.type";
+import { SimpleNewable } from "./types/simple-newable.type";
 
 export class EventBus {
   private eventStream: Subject<unknown> = new Subject<unknown>();
@@ -9,13 +14,23 @@ export class EventBus {
   /**
    * I filter the event stream to get only events of one type as observable
    * @param typeFilter The event type to listen to
-   * @returns
+   *        must extend from BusEvent<R>
+   *
+   * @returns either the Event E or the Payload of E, typed P
+   * Note: These types do not be passed manually, they will be inferenced by TS
    */
-  public on$<T>(typeFilter: TypeDiscriminator<T>): Observable<T> {
+  public on$<E extends BusEvent<P>, P>(
+    typeFilter: NewableBusEvent<E, P>,
+  ): Observable<EventualPayload<P>> {
     return this.eventStream.pipe(
-      filter((event: unknown): event is T => {
+      filter((event: unknown): event is E => {
         return event instanceof typeFilter;
       }),
+      map((event): EventualPayload<P> =>
+        (event.payload !== undefined)
+          ? event.payload
+          : undefined as EventualPayload<P>
+      ),
     );
   }
 
