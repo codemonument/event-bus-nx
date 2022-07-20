@@ -6,6 +6,10 @@ A NX Monorepo for a typed event-bus implementation
 
 # Repo Log
 
+## 2022-07-20 libs/event-bus-core
+
+1. `nx generate @nrwl/js:library --name=event-bus-core --publishable --tags=type:lib,project:event-bus-core --importPath @codemonument/event-bus-core --pascalCaseFiles --strict --config project --compiler swc --skipTypeCheck`
+
 ## 2022-07-20 create-nx-workspace
 
 1. `npx create-nx-workspace --name event-bus-nx --preset empty --interactive --cli nx --nxCloud`  
