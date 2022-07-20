@@ -8,7 +8,7 @@ export type EventGroupCallback<P> = (eventPayload: EventualPayload<P>) => void;
 /**
  * Is called 'CallbackFunction' in original article
  */
-export type EventGroupErrorCallback<T> = (error: T) => void;
+export type EventGroupErrorCallback<T = unknown> = (error: T) => void;
 
 export function defaultErrorCallback(error: unknown) {
   console.error(
