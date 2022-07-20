@@ -32,10 +32,15 @@ describe("EventBus", () => {
     ebus.emit(demoEventInstance);
   });
 
-  it.skip("should send and receive DemoWithPayload events", (done) => {
+  it("should send and receive DemoWithPayload events", (done) => {
     const ebus = new EventBus();
+    const demoEventInstance = new DemoWithPayload({ name: "Bob" });
     ebus.on$(DemoWithPayload).pipe(take(1)).subscribe((event) => {
+      expect(event.payload.name).toStrictEqual("Bob");
+      expect(event).toBe(demoEventInstance);
       done();
     });
+
+    ebus.emit(demoEventInstance);
   });
 });
