@@ -1,4 +1,4 @@
-type EventualPayload<P> = P extends void ? void : P;
+export type EventualPayload<P> = P extends void ? void : P;
 
 /**
  * I am the base-class for all of the events that this application pushes onto the
