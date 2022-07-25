@@ -31,6 +31,17 @@ export abstract class BusEvent<P> {
  * - has a parameter `payload` which is of type P, unles
  * - P is `void`, in this case it's not allowed to pass anything to this constructor!
  *   (expressed via the conditional `never` type)
+ *
+ * Technical Details:
+ * Actually, this interface does NOT define the class type,
+ * but defines the shape of a FUNCTION (like the @FunctionalInterface in Java).
+ * Reason: A typescript class name (like Map) internally refers to the constructor of a class,
+ * which happens to have more things attached to it's prototype!
+ *
+ * Imagination:
+ * Think of NewableBusEvent interface as a Factory, which nows how to construct stuff with new.
+ * In this case, it knows, how to construct instances of E (the event type)
+ * See: https://stackoverflow.com/questions/13407036/how-does-interfaces-with-construct-signatures-work
  */
 export interface NewableBusEvent<E extends BusEvent<P>, P> {
   new (payload: EventualPayload<P>): E;
