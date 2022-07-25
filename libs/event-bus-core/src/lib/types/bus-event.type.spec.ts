@@ -1,5 +1,10 @@
-import { BusEvent, NewableBusEvent } from "./bus-event.type";
-import { SimpleNewable } from "./simple-newable.type";
+import { BusEvent } from "./bus-event.type";
+import {
+  expectAssignable,
+  expectError,
+  expectNotAssignable,
+  expectType,
+} from "tsd";
 
 /**
  * For testing events without payload
@@ -8,7 +13,7 @@ class PlainEvent extends BusEvent<void> {
   public type = "PlainEvent";
 }
 
-/**
+/** #
  * For testing events with payload
  */
 interface DemoPayload {
@@ -24,9 +29,15 @@ describe(`bus-event.type`, () => {
    * BusEvent allows the user of PlainEvent
    * to *not* provide a param to the constructor when instantiating it.
    */
-  it(`should allow events without payload (=void)`, () => {
+  it(`should allow event construction without payload (=void)`, () => {
     const event = new PlainEvent();
     expect(event).toBeDefined();
+    expectType<void>(event.payload);
+    expectType<string>(event.type);
+
+    // TODO: Test while using this event bus library, whether defining event.payload as void is enough
+    // or if assignability to undefined is very useful
+    expectNotAssignable<undefined>(event.payload);
   });
 
   /**
