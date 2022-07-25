@@ -1,3 +1,7 @@
+/**
+ * When P = void, resulting type MUST be void, otherwise typescript forces the user
+ * to input a payload param when instantiating a child class of BusEvent
+ */
 export type EventualPayload<P> = P extends void ? void : P;
 
 /**
