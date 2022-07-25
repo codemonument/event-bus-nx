@@ -32,9 +32,10 @@ describe(`bus-event.type`, () => {
   it(`should allow event construction without payload (=void)`, () => {
     const event = new PlainEvent();
     expect(event).toBeDefined();
+
+    // Type Expectations
     expectType<void>(event.payload);
     expectType<string>(event.type);
-
     // TODO: Test while using this event bus library, whether defining event.payload as void is enough
     // or if assignability to undefined is very useful
     expectNotAssignable<undefined>(event.payload);
@@ -44,12 +45,15 @@ describe(`bus-event.type`, () => {
    * IF EventWithPayload extends BusEvent with any other type than void (let's call it T),
    * the user of EventWithpayload is forced to provide a value of type T.
    */
-  it(`should allow events with payload (=any)`, () => {
+  it(`should allow event construction with payload (=any)`, () => {
     const payload: DemoPayload = { name: "Bob" };
     // Note: If you remove the param, typescript will complain,
     // that you need to provide a value for the payload!
     const event = new EventWithPayload(payload);
     expect(event.payload).toStrictEqual(payload);
+
+    // Type Expectations
+    expectType<DemoPayload>(event.payload);
   });
 
   it(`PlainEvent should be compareable with instanceof`, () => {
