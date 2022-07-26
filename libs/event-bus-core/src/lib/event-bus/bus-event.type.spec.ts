@@ -72,11 +72,6 @@ describe(`bus-event.type`, () => {
     expect(event instanceof EventWithPayload).toBeTruthy();
   });
 
-  it(`PlainEvent should be assignable to SimpleNewable<PlainEvent>`, () => {
-    expectAssignable<SimpleNewable<PlainEvent>>(PlainEvent);
-  });
-
-  //
   /**
    * Maybe the NewableXXX Stuff is not testable in this manner (since plain instanceof works directly)
    * Maybe test this Newable behavior in event-bus.spec
@@ -94,20 +89,14 @@ describe(`bus-event.type`, () => {
    * If this works in the test of event-bus.ts, I deem that it satisfies the validity of this NewableBusEvent Interface,
    * bc. the NewableBusEvent Interface has only the goal of allowing the `instanceof` check in <EventBus>.on$().
    */
-  it.skip(`PlainEvent should be assignable to NewableBusEvent`, () => {
-    const event = new PlainEvent();
+  it(`PlainEvent should be assignable to SimpleNewable<PlainEvent>`, () => {
     expectAssignable<SimpleNewable<PlainEvent>>(PlainEvent);
+  });
 
-    // const createEvent = <E extends BusEvent<P>, P>(
-    //   factory: NewableBusEvent<E, P>,
-    // ): E => {
-    //   return new factory(undefined);
-    // };
-
-    // // Type Expectations
-    // expectType<PlainEvent>(
-    //   createEvent<PlainEvent, EventualPayload<void>>(PlainEvent),
-    // );
+  it.skip(`PlainEvent should be assignable to NewableBusEvent<PlainEvent, void>`, () => {
+    // Working with SimpleNewable in event-bus.ts for now, until payload typing errors are fixed!
+    // CAUTION: VERY COMPLICATED TYPING!
+    expectAssignable<NewableBusEvent<PlainEvent, void>>(PlainEvent);
   });
 
   // it.skip(`EventWithPayload should be assignable to NewableBusEvent`, () => {
