@@ -36,6 +36,11 @@ export type ExtractGenericArgument<T> = T extends BusEvent<infer Generic>
   : unknown;
 
 /**
+ * Simplified ExtractGenericArgument<eventType> expression
+ */
+export type payload<eventType> = ExtractGenericArgument<eventType>;
+
+/**
  * Allows to ensure, that a certain type
  * - can be instantiated with calling `new`
  *   (this is needed to be able to use the type in question with `instanceof`)
