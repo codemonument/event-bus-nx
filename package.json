@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "publish-example": "nx publish event-bus-core --version 1.0.0-beta.1 --tag next"
   },
   "private": true,
   "devDependencies": {
