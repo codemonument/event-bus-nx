@@ -1,9 +1,9 @@
-import { BusEvent } from "./bus-event.type";
+import { BusEvent, EventualPayload, NewableBusEvent } from "./bus-event.type";
 import {
   expectAssignable,
-  expectError,
   expectNotAssignable,
   expectType,
+  printType,
 } from "tsd";
 
 /**
@@ -67,15 +67,38 @@ describe(`bus-event.type`, () => {
     expect(event instanceof EventWithPayload).toBeTruthy();
   });
 
-  // TODO: Maybe the NewableXXX Stuff is not testable in this manner (since plain instanceof works directly)
-  // Maybe test this Newable behavior in event-bus.spec
   //
-  // it.skip(`PlainEvent should be assignable to NewableBusEvent`, () => {
+  /**
+   * Maybe the NewableXXX Stuff is not testable in this manner (since plain instanceof works directly)
+   * Maybe test this Newable behavior in event-bus.spec
+   *
+   * bjesuiter 2022-07-25: I deem the NewableXXX stuff not testable here.
+   * Since NewableBusEvent interface does only testify, that a certain type can be constructed using a specific constructor,
+   * it has no value representation and therefore can't be used in expectType<> generic param.
+   *
+   * I also failed trying to indirectly test the correctness of the NewableBusEvent Interface by using it
+   * as a param to a mocked `createEvent` Function, bc. in the end, the type of payload inside PlainEvent and payload inside BusEvent
+   * do not match. This may be solvable, but the construct seems too complicated.
+   *
+   * In the end, the event bus should work and should be able to filter events on the eventStream
+   * based on the ClassObject passed to the eventBus.on$ filter function.
+   * If this works in the test of event-bus.ts, I deem that it satisfies the validity of this NewableBusEvent Interface,
+   * bc. the NewableBusEvent Interface has only the goal of allowing the `instanceof` check in <EventBus>.on$().
+   */
+  // it(`PlainEvent should be assignable to NewableBusEvent`, () => {
   //   const event = new PlainEvent();
-  //   const newable: NewableBusEvent<PlainEvent, void> = event;
   //   // const newable: SimpleNewable<PlainEvent> = event;
 
-  //   expect(newable).toBeDefined();
+  //   const createEvent = <E extends BusEvent<P>, P>(
+  //     factory: NewableBusEvent<E, P>,
+  //   ): E => {
+  //     return new factory(undefined);
+  //   };
+
+  //   // Type Expectations
+  //   expectType<PlainEvent>(
+  //     createEvent<PlainEvent, EventualPayload<void>>(PlainEvent),
+  //   );
   // });
 
   // it.skip(`EventWithPayload should be assignable to NewableBusEvent`, () => {
