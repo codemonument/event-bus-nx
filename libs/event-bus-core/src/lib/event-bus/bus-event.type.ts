@@ -27,6 +27,15 @@ export abstract class BusEvent<payloadType> {
 }
 
 /**
+ * Allows to extract the first and single type param of BusEvent.
+ * More Infos:
+ * https://stackoverflow.com/questions/70472192/extract-first-generic-argument-from-type
+ */
+export type ExtractGenericArgument<T> = T extends BusEvent<infer Generic>
+  ? Generic
+  : unknown;
+
+/**
  * Allows to ensure, that a certain type
  * - can be instantiated with calling `new`
  *   (this is needed to be able to use the type in question with `instanceof`)
@@ -45,9 +54,9 @@ export abstract class BusEvent<payloadType> {
  * In this case, it knows, how to construct instances of E (the event type)
  * See: https://stackoverflow.com/questions/13407036/how-does-interfaces-with-construct-signatures-work
  */
+
 export interface NewableBusEvent<
-  eventType extends BusEvent<payloadType>,
-  payloadType,
+  eventType extends BusEvent<ExtractGenericArgument<eventType>>,
 > {
   // payloadType - Define that the constructor gets a Payload
   // Type of the payload is not so clear here,
