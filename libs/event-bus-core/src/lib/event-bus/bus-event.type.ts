@@ -17,11 +17,13 @@ export type EventualPayload<P> = P extends void ? void : P;
  *   public type = "EventWithoutPayload";
  * }
  *
- * @type P === Payload Type
+ * @type G_PayloadType
+ * === generic payload type
+ * === "type variable" for the typescript type of the payload incomming into the constructor.
  */
-export abstract class BusEvent<P> {
+export abstract class BusEvent<G_PayloadType> {
   public abstract readonly type: string;
-  constructor(public readonly payload: EventualPayload<P>) {}
+  constructor(public readonly payload: EventualPayload<G_PayloadType>) {}
 }
 
 /**
