@@ -45,7 +45,10 @@ export abstract class BusEvent<payloadType> {
  * In this case, it knows, how to construct instances of E (the event type)
  * See: https://stackoverflow.com/questions/13407036/how-does-interfaces-with-construct-signatures-work
  */
-export interface NewableBusEvent<E extends BusEvent<P>, P> {
+export interface NewableBusEvent<
+  eventType extends BusEvent<payloadType>,
+  payloadType,
+> {
   // P - Define that the constructor gets a Payload of type EventualPayload<P>
-  new <P>(payload: EventualPayload<P>): E;
+  new <payloadType>(payload: EventualPayload<payloadType>): eventType;
 }
