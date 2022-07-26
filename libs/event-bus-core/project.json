@@ -17,7 +17,19 @@
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs event-bus-core {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs event-bus-core {args.v} {args.tag}"
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build"
+        }
+      ]
+    },
+    "deploy": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npm publish --access public --otp={args.otp} dist/libs/event-bus-core"
       },
       "dependsOn": [
         {
