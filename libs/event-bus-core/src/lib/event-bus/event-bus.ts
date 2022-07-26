@@ -2,8 +2,8 @@ import { filter, map, Observable, Subject } from "rxjs";
 import {
   BusEvent,
   EventualPayload,
-  ExtractGenericArgument,
   NewableBusEvent,
+  payloadOf,
 } from "./bus-event.type";
 
 export class EventBus {
@@ -19,9 +19,9 @@ export class EventBus {
    * @returns either the Event E or the Payload of E, typed P
    * Note: These types do not be passed manually, they will be inferenced by TS
    */
-  public on$<E extends BusEvent<ExtractGenericArgument<E>>>(
+  public on$<E extends BusEvent<payloadOf<E>>>(
     typeFilter: NewableBusEvent<E>,
-  ): Observable<EventualPayload<ExtractGenericArgument<E>>> {
+  ): Observable<EventualPayload<payloadOf<E>>> {
     return this.eventStream.pipe(
       // Filters all events on the event stream and returns only these, which map the typeFilter
       filter((event: unknown): event is E => {
@@ -33,7 +33,7 @@ export class EventBus {
       map((event) =>
         (event.payload !== undefined)
           ? event.payload
-          : undefined as EventualPayload<ExtractGenericArgument<E>>
+          : undefined as EventualPayload<payloadOf<E>>
       ),
     );
   }

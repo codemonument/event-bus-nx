@@ -1,9 +1,5 @@
 import { EventBus } from "./event-bus";
-import {
-  BusEvent,
-  EventualPayload,
-  ExtractGenericArgument,
-} from "./bus-event.type";
+import { BusEvent, EventualPayload, payloadOf } from "./bus-event.type";
 import { Observable, take } from "rxjs";
 import { expectType } from "tsd";
 
@@ -35,7 +31,7 @@ describe("EventBus", () => {
 
     const listener = ebus.on$(PlainEvent);
     expectType<Observable<void>>(listener);
-    expectType<Observable<EventualPayload<ExtractGenericArgument<PlainEvent>>>>(
+    expectType<Observable<EventualPayload<payloadOf<PlainEvent>>>>(
       listener,
     );
 

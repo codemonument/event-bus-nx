@@ -1,8 +1,8 @@
 import {
   BusEvent,
   EventualPayload,
-  ExtractGenericArgument,
   NewableBusEvent,
+  payloadOf,
 } from "./bus-event.type";
 import { expectAssignable, expectNotAssignable, expectType } from "tsd";
 import { SimpleNewable } from "./simple-newable.type";
@@ -112,7 +112,7 @@ describe(`bus-event.type`, () => {
     expectType<BusEvent<DemoPayloadType>>(demoEvent);
 
     // Ensures, that the extracted generic type argument of EventWithPayload is the same as the type of demoPayload variable
-    expectType<ExtractGenericArgument<EventWithPayload>>(demoPayload);
+    expectType<payloadOf<EventWithPayload>>(demoPayload);
 
     // Ensures, that EventWithPayload, which consists of `extends BusEvent<DemoPayloadType>`, is the same as NewableBusEvent<EventWithPayload>
     expectType<NewableBusEvent<EventWithPayload>>(

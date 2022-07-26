@@ -1,10 +1,11 @@
 import { Subscription } from "rxjs";
-import { EventBus } from "../event-bus";
+import { EventBus } from "../event-bus/event-bus";
 import {
   BusEvent,
   EventualPayload,
   NewableBusEvent,
-} from "../types/bus-event.type";
+  payloadOf,
+} from "../event-bus/bus-event.type";
 import {
   defaultErrorCallback,
   EventGroupCallback,
@@ -45,13 +46,13 @@ export class EventBusGroup {
    * @param callbackContext
    * @returns
    */
-  public on<E extends BusEvent<P>, P>(
-    typeFilter: NewableBusEvent<E, P>,
-    callback: EventGroupCallback<P>,
+  public on<E extends BusEvent<payloadOf<E>>>(
+    typeFilter: NewableBusEvent<E>,
+    callback: EventGroupCallback<payloadOf<E>>,
     callbackContext: unknown = null,
     errorCallback?: EventGroupErrorCallback,
   ): void {
-    const next = (eventPayload: EventualPayload<P>) => {
+    const next = (eventPayload: EventualPayload<payloadOf<E>>) => {
       try {
         callback.call(callbackContext, eventPayload);
       } catch (error) {
