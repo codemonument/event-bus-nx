@@ -1,4 +1,9 @@
-import { BusEvent, EventualPayload, NewableBusEvent } from "./bus-event.type";
+import {
+  BusEvent,
+  EventualPayload,
+  ExtractGenericArgument,
+  NewableBusEvent,
+} from "./bus-event.type";
 import { expectAssignable, expectNotAssignable, expectType } from "tsd";
 import { SimpleNewable } from "./simple-newable.type";
 
@@ -93,19 +98,24 @@ describe(`bus-event.type`, () => {
     expectAssignable<SimpleNewable<PlainEvent>>(PlainEvent);
   });
 
-  it.skip(`PlainEvent should be assignable to NewableBusEvent<PlainEvent, void>`, () => {
+  it(`PlainEvent should be assignable to NewableBusEvent<PlainEvent, void>`, () => {
     // Working with SimpleNewable in event-bus.ts for now, until payload typing errors are fixed!
     // CAUTION: VERY COMPLICATED TYPING!
-    expectAssignable<NewableBusEvent<PlainEvent, void>>(PlainEvent);
+    expectAssignable<NewableBusEvent<PlainEvent>>(PlainEvent);
   });
 
-  // it.skip(`EventWithPayload should be assignable to NewableBusEvent`, () => {
-  //   const payload: DemoPayload = { name: "Bob" };
-  //   const event = new EventWithPayload(payload);
+  it(`EventWithPayload should be assignable to NewableBusEvent<EventWithPayload, DemoPayloadType>`, () => {
+    const demoPayload = { name: "Bob" };
+    const demoEvent = new EventWithPayload(demoPayload);
 
-  //   const newable: NewableBusEvent<EventWithPayload, DemoPayload> = event;
-  //   // const newable: SimpleNewable<EventWithPayload> = event;
+    // Ensures that demoEvent is a valid BusEvent
+    expectType<BusEvent<DemoPayloadType>>(demoEvent);
 
-  //   expect(newable).toBeDefined();
-  // });
+    // Ensures, that the extracted generic type argument of EventWithPayload is the same as the type of demoPayload variable
+    expectType<ExtractGenericArgument<EventWithPayload>>(demoPayload);
+
+    expectAssignable<NewableBusEvent<EventWithPayload>>(
+      demoEvent,
+    );
+  });
 });
