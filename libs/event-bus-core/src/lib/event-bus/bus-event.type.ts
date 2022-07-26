@@ -49,6 +49,9 @@ export interface NewableBusEvent<
   eventType extends BusEvent<payloadType>,
   payloadType,
 > {
-  // P - Define that the constructor gets a Payload of type EventualPayload<P>
-  new <payloadType>(payload: EventualPayload<payloadType>): eventType;
+  // payloadType - Define that the constructor gets a Payload
+  // Type of the payload is not so clear here,
+  // could be of type EventualPayload<P>
+  // or simply type: payloadType
+  new <payloadType>(payload: payloadType): eventType;
 }
