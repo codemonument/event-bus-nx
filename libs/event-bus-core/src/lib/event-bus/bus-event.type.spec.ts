@@ -101,7 +101,7 @@ describe(`bus-event.type`, () => {
   it(`PlainEvent should be assignable to NewableBusEvent<PlainEvent, void>`, () => {
     // Working with SimpleNewable in event-bus.ts for now, until payload typing errors are fixed!
     // CAUTION: VERY COMPLICATED TYPING!
-    expectAssignable<NewableBusEvent<PlainEvent>>(PlainEvent);
+    expectType<NewableBusEvent<PlainEvent>>(PlainEvent);
   });
 
   it(`EventWithPayload should be assignable to NewableBusEvent<EventWithPayload, DemoPayloadType>`, () => {
@@ -114,8 +114,9 @@ describe(`bus-event.type`, () => {
     // Ensures, that the extracted generic type argument of EventWithPayload is the same as the type of demoPayload variable
     expectType<ExtractGenericArgument<EventWithPayload>>(demoPayload);
 
-    expectAssignable<NewableBusEvent<EventWithPayload>>(
-      demoEvent,
+    // Ensures, that EventWithPayload, which consists of `extends BusEvent<DemoPayloadType>`, is the same as NewableBusEvent<EventWithPayload>
+    expectType<NewableBusEvent<EventWithPayload>>(
+      EventWithPayload,
     );
   });
 });

@@ -62,5 +62,7 @@ export interface NewableBusEvent<
   // Type of the payload is not so clear here,
   // could be of type EventualPayload<P>
   // or simply type: payloadType
-  new <payloadType>(payload: payloadType): eventType;
+  new <payloadType extends ExtractGenericArgument<eventType>>(
+    payload: payloadType,
+  ): eventType;
 }
