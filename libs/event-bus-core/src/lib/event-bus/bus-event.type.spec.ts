@@ -1,10 +1,5 @@
 import { BusEvent, EventualPayload, NewableBusEvent } from "./bus-event.type";
-import {
-  expectAssignable,
-  expectNotAssignable,
-  expectType,
-  printType,
-} from "tsd";
+import { expectAssignable, expectNotAssignable, expectType } from "tsd";
 
 /**
  * For testing events without payload
@@ -13,7 +8,7 @@ class PlainEvent extends BusEvent<void> {
   public type = "PlainEvent";
 }
 
-/** #
+/**
  * For testing events with payload
  */
 interface DemoPayloadType {
