@@ -1,5 +1,5 @@
 import { EventBus } from "./event-bus";
-import { BusEvent } from "./types/bus-event.type";
+import { BusEvent } from "../types/bus-event.type";
 import { take } from "rxjs";
 
 /**
