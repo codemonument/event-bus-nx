@@ -10,7 +10,7 @@ import {
   defaultErrorCallback,
   EventGroupCallback,
   EventGroupErrorCallback,
-} from "./event-group-callbacks";
+} from "./event-group-callbacks.type";
 
 /**
  * An EventBusGroup allows for using the event bus with a Callback-Interface.
