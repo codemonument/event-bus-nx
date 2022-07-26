@@ -1,10 +1,6 @@
 import { filter, map, Observable, Subject } from "rxjs";
-import {
-  BusEvent,
-  EventualPayload,
-  NewableBusEvent,
-} from "./types/bus-event.type";
-import { SimpleNewable } from "./types/simple-newable.type";
+import { BusEvent, EventualPayload, NewableBusEvent } from "./bus-event.type";
+import { SimpleNewable } from "./simple-newable.type";
 
 export class EventBus {
   private eventStream: Subject<unknown> = new Subject<unknown>();
