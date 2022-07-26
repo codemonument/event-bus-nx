@@ -1,4 +1,4 @@
-import { EventualPayload } from "../types/bus-event.type";
+import { EventualPayload } from "../event-bus/bus-event.type";
 
 /**
  * Is called 'CallbackFunction' in original article
