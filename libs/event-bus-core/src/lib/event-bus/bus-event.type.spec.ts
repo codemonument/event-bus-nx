@@ -1,5 +1,6 @@
 import { BusEvent, EventualPayload, NewableBusEvent } from "./bus-event.type";
 import { expectAssignable, expectNotAssignable, expectType } from "tsd";
+import { SimpleNewable } from "./simple-newable.type";
 
 /**
  * For testing events without payload
@@ -71,6 +72,10 @@ describe(`bus-event.type`, () => {
     expect(event instanceof EventWithPayload).toBeTruthy();
   });
 
+  it(`PlainEvent should be assignable to SimpleNewable<PlainEvent>`, () => {
+    expectAssignable<SimpleNewable<PlainEvent>>(PlainEvent);
+  });
+
   //
   /**
    * Maybe the NewableXXX Stuff is not testable in this manner (since plain instanceof works directly)
@@ -89,21 +94,21 @@ describe(`bus-event.type`, () => {
    * If this works in the test of event-bus.ts, I deem that it satisfies the validity of this NewableBusEvent Interface,
    * bc. the NewableBusEvent Interface has only the goal of allowing the `instanceof` check in <EventBus>.on$().
    */
-  // it(`PlainEvent should be assignable to NewableBusEvent`, () => {
-  //   const event = new PlainEvent();
-  //   // const newable: SimpleNewable<PlainEvent> = event;
+  it.skip(`PlainEvent should be assignable to NewableBusEvent`, () => {
+    const event = new PlainEvent();
+    expectAssignable<SimpleNewable<PlainEvent>>(PlainEvent);
 
-  //   const createEvent = <E extends BusEvent<P>, P>(
-  //     factory: NewableBusEvent<E, P>,
-  //   ): E => {
-  //     return new factory(undefined);
-  //   };
+    // const createEvent = <E extends BusEvent<P>, P>(
+    //   factory: NewableBusEvent<E, P>,
+    // ): E => {
+    //   return new factory(undefined);
+    // };
 
-  //   // Type Expectations
-  //   expectType<PlainEvent>(
-  //     createEvent<PlainEvent, EventualPayload<void>>(PlainEvent),
-  //   );
-  // });
+    // // Type Expectations
+    // expectType<PlainEvent>(
+    //   createEvent<PlainEvent, EventualPayload<void>>(PlainEvent),
+    // );
+  });
 
   // it.skip(`EventWithPayload should be assignable to NewableBusEvent`, () => {
   //   const payload: DemoPayload = { name: "Bob" };
