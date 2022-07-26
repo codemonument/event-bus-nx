@@ -1,6 +1,11 @@
 import { EventBus } from "./event-bus";
-import { BusEvent } from "./bus-event.type";
-import { take } from "rxjs";
+import {
+  BusEvent,
+  EventualPayload,
+  ExtractGenericArgument,
+} from "./bus-event.type";
+import { Observable, take } from "rxjs";
+import { expectType } from "tsd";
 
 /**
  * For testing events without payload
@@ -27,7 +32,14 @@ describe("EventBus", () => {
   it("should send and receive (paramless) demo event", (done) => {
     const ebus = new EventBus();
     const demoEventInstance = new PlainEvent();
-    ebus.on$(PlainEvent).pipe(take(1)).subscribe((event) => {
+
+    const listener = ebus.on$(PlainEvent);
+    expectType<Observable<void>>(listener);
+    expectType<Observable<EventualPayload<ExtractGenericArgument<PlainEvent>>>>(
+      listener,
+    );
+
+    listener.pipe(take(1)).subscribe((event) => {
       // Expect event to be undefined, since this DemoEvent does not have a payload
       // Note, that the return type of on$ is correctly typed to Observable<void> in this case!
       expect(event).toBe(undefined);
