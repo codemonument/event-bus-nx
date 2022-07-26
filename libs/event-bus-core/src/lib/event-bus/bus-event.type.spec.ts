@@ -16,12 +16,21 @@ class PlainEvent extends BusEvent<void> {
 /** #
  * For testing events with payload
  */
-interface DemoPayload {
+interface DemoPayloadType {
   name: string;
 }
-class EventWithPayload extends BusEvent<DemoPayload> {
+class EventWithPayload extends BusEvent<DemoPayloadType> {
   public type = "EventWithPayload";
 }
+
+describe(`EventualPayload`, () => {
+  it(`should not accept assigning undefined to EventualPayload<DemoPayloadType>`, () => {
+    expectNotAssignable<EventualPayload<DemoPayloadType>>(undefined);
+  });
+  it(`should accept assigning undefined to EventualPayload<void>`, () => {
+    expectAssignable<EventualPayload<void>>(undefined);
+  });
+});
 
 describe(`bus-event.type`, () => {
   /**
@@ -46,14 +55,14 @@ describe(`bus-event.type`, () => {
    * the user of EventWithpayload is forced to provide a value of type T.
    */
   it(`should allow event construction with payload (=any)`, () => {
-    const payload: DemoPayload = { name: "Bob" };
+    const payload: DemoPayloadType = { name: "Bob" };
     // Note: If you remove the param, typescript will complain,
     // that you need to provide a value for the payload!
     const event = new EventWithPayload(payload);
     expect(event.payload).toStrictEqual(payload);
 
     // Type Expectations
-    expectType<DemoPayload>(event.payload);
+    expectType<DemoPayloadType>(event.payload);
   });
 
   it(`PlainEvent should be compareable with instanceof`, () => {
@@ -62,7 +71,7 @@ describe(`bus-event.type`, () => {
   });
 
   it(`EventWithPayload should be compareable with instanceof`, () => {
-    const payload: DemoPayload = { name: "Bob" };
+    const payload: DemoPayloadType = { name: "Bob" };
     const event = new EventWithPayload(payload);
     expect(event instanceof EventWithPayload).toBeTruthy();
   });
