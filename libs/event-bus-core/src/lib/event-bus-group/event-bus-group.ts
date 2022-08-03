@@ -24,14 +24,15 @@ export class EventBusGroup {
 
   constructor(
     private bus: EventBus,
-    private errorCallback: EventGroupErrorCallback = defaultErrorCallback,
+    private eventGroupErrorCallback: EventGroupErrorCallback =
+      defaultErrorCallback,
   ) {}
 
   /**
    * Replaces the default error callback function with a custom one
    */
   public setDefaultErrorCallback(callback: EventGroupErrorCallback): void {
-    this.errorCallback = callback;
+    this.eventGroupErrorCallback = callback;
   }
 
   /**
@@ -48,26 +49,29 @@ export class EventBusGroup {
   public on<E extends BusEvent<payloadOf<E>>>(
     typeFilter: NewableBusEvent<E>,
     callback: EventGroupCallback<payloadOf<E>>,
-    callbackContext: unknown = null,
-    errorCallback?: EventGroupErrorCallback,
+    options?: {
+      callbackContext?: unknown;
+      errorCallback?: EventGroupErrorCallback;
+    },
   ): void {
+    const callCtx = options?.callbackContext ?? null;
     const next = (eventPayload: EventualPayload<payloadOf<E>>) => {
       try {
-        callback.call(callbackContext, eventPayload);
+        callback.call(callCtx, eventPayload);
       } catch (error) {
-        if (errorCallback) {
-          errorCallback.call(callbackContext, errorCallback);
+        if (options?.errorCallback) {
+          options.errorCallback.call(callCtx, error);
           return;
         }
 
-        this.errorCallback.call(callbackContext, error);
+        this.eventGroupErrorCallback.call(callCtx, error);
       }
     };
 
     const sub = this.bus.on$(typeFilter).subscribe({
       next,
       error: (error: unknown) =>
-        this.errorCallback.call(callbackContext, error),
+        this.eventGroupErrorCallback.call(callCtx, error),
     });
 
     this.subscriptions.push(sub);

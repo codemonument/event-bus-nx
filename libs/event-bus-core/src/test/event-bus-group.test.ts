@@ -73,17 +73,33 @@ describe(`event-bus-group.test`, () => {
   //   }
   // });
 
-  it(`should trigger custom error callback in EventBusGroup`, (done) => {
-    const errHandler = (error: unknown) => {
+  it(`should trigger custom error callback from EventBusGroup constructor`, (done) => {
+    const eBus = new EventBus();
+    const eGroup = new EventBusGroup(eBus, (error: unknown) => {
       expect(error).toBeDefined();
       expect(error).toMatchSnapshot();
       done();
-    };
-    const eBus = new EventBus();
-    const eGroup = new EventBusGroup(eBus, errHandler);
+    });
 
     eGroup.on(PlainEvent, () => {
       throw new Error(`Fake error in callback!`);
+    });
+
+    eBus.emit(new PlainEvent());
+  });
+
+  it(`should trigger custom error callback from eGroup.on()`, (done) => {
+    const eBus = new EventBus();
+    const eGroup = new EventBusGroup(eBus);
+
+    eGroup.on(PlainEvent, () => {
+      throw new Error(`Fake error in callback!`);
+    }, {
+      errorCallback: (error: unknown) => {
+        expect(error).toBeDefined();
+        expect(error).toMatchSnapshot();
+        done();
+      },
     });
 
     eBus.emit(new PlainEvent());

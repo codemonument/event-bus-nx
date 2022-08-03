@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`event-bus-group.test should trigger custom error callback in EventBusGroup 1`] = `[Error: Fake error in callback!]`;
+exports[`event-bus-group.test should trigger custom error callback from EventBusGroup constructor 1`] = `[Error: Fake error in callback!]`;
+
+exports[`event-bus-group.test should trigger custom error callback from eGroup.on() 1`] = `[Error: Fake error in callback!]`;
