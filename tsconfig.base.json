@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@codemonument/event-bus-core": ["libs/event-bus-core/src/index.ts"],
       "scrap": ["libs/event-bus-core-old/src/index.ts"]
     }
   },
