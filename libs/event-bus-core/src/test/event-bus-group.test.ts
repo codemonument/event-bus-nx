@@ -105,5 +105,22 @@ describe(`event-bus-group.test`, () => {
     eBus.emit(new PlainEvent());
   });
 
+  it(`should allow overwriting error callback with setDefaultErrorCallback`, (done) => {
+    const eBus = new EventBus();
+    const eGroup = new EventBusGroup(eBus);
+
+    eGroup.setDefaultErrorCallback((error: unknown) => {
+      expect(error).toBeDefined();
+      expect(error).toMatchSnapshot();
+      done();
+    });
+
+    eGroup.on(PlainEvent, () => {
+      throw new Error(`Fake error in callback!`);
+    });
+
+    eBus.emit(new PlainEvent());
+  });
+
   // TODO: Finish EventBusGroup Tests!
 });
