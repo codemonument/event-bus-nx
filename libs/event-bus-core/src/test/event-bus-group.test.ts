@@ -1,6 +1,6 @@
 import { EventBus } from "../lib/event-bus/event-bus";
 import { EventBusGroup } from "../lib/event-bus-group/event-bus-group";
-import { PlainEvent } from "./test-events.types";
+import { EventWithPayload, PlainEvent } from "./test-events.types";
 
 describe(`event-bus-group.test`, () => {
   it(`should be constructed`, () => {
@@ -18,6 +18,19 @@ describe(`event-bus-group.test`, () => {
     });
 
     eBus.emit(new PlainEvent());
+  });
+
+  it(`should receive DemoPayload in callback (test EventWithPayload)`, (done) => {
+    const eBus = new EventBus();
+    const eGroup = new EventBusGroup(eBus);
+    const demoEvent = new EventWithPayload({ name: "Bob" });
+
+    eGroup.on(EventWithPayload, ({ name }) => {
+      expect(name).toEqual(demoEvent.payload.name);
+      done();
+    });
+
+    eBus.emit(demoEvent);
   });
 
   // TODO: Finish EventBusGroup Tests!
