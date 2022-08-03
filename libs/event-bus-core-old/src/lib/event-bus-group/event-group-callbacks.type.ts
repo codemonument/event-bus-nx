@@ -1,4 +1,4 @@
-import { EventualPayload } from "../event-bus/bus-event.type";
+import { EventualPayload } from '../event-bus/bus-event.type';
 
 /**
  * Is called 'CallbackFunction' in original article
@@ -19,6 +19,6 @@ export function defaultErrorCallback(error: unknown) {
   Error Details:
 
   `,
-    error,
+    error
   );
 }

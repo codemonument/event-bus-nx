@@ -3,10 +3,10 @@ import {
   EventualPayload,
   NewableBusEvent,
   payloadOf,
-} from "../index";
-import { expectAssignable, expectNotAssignable, expectType } from "tsd";
-import { SimpleNewable } from "../lib/event-bus/simple-newable.type";
-import { DemoPayload, EventWithPayload, PlainEvent } from "./test-events.types";
+} from '../index';
+import { expectAssignable, expectNotAssignable, expectType } from 'tsd';
+import { SimpleNewable } from '../lib/event-bus/simple-newable.type';
+import { DemoPayload, EventWithPayload, PlainEvent } from './test-events.types';
 
 describe(`EventualPayload`, () => {
   it(`should not accept assigning undefined to EventualPayload<DemoPayload>`, () => {
@@ -40,7 +40,7 @@ describe(`bus-event.type`, () => {
    * the user of EventWithpayload is forced to provide a value of type T.
    */
   it(`should allow event construction with payload (=any)`, () => {
-    const payload: DemoPayload = { name: "Bob" };
+    const payload: DemoPayload = { name: 'Bob' };
     // Note: If you remove the param, typescript will complain,
     // that you need to provide a value for the payload!
     const event = new EventWithPayload(payload);
@@ -56,7 +56,7 @@ describe(`bus-event.type`, () => {
   });
 
   it(`EventWithPayload should be compareable with instanceof`, () => {
-    const payload: DemoPayload = { name: "Bob" };
+    const payload: DemoPayload = { name: 'Bob' };
     const event = new EventWithPayload(payload);
     expect(event instanceof EventWithPayload).toBeTruthy();
   });
@@ -89,7 +89,7 @@ describe(`bus-event.type`, () => {
   });
 
   it(`EventWithPayload should be assignable to NewableBusEvent<EventWithPayload, DemoPayloadType>`, () => {
-    const demoPayload = { name: "Bob" };
+    const demoPayload = { name: 'Bob' };
     const demoEvent = new EventWithPayload(demoPayload);
 
     // Ensures that demoEvent is a valid BusEvent
@@ -99,8 +99,6 @@ describe(`bus-event.type`, () => {
     expectType<payloadOf<EventWithPayload>>(demoPayload);
 
     // Ensures, that EventWithPayload, which consists of `extends BusEvent<DemoPayloadType>`, is the same as NewableBusEvent<EventWithPayload>
-    expectType<NewableBusEvent<EventWithPayload>>(
-      EventWithPayload,
-    );
+    expectType<NewableBusEvent<EventWithPayload>>(EventWithPayload);
   });
 });

@@ -7,11 +7,11 @@ const { exclude: _, ...swcJestConfig } = JSON.parse(
   readFileSync(`${__dirname}/.lib.swcrc`, 'utf-8')
 );
 export default {
-  displayName: 'event-bus-core',
+  displayName: 'event-bus-core-old',
   preset: '../../jest.preset.js',
   transform: {
     '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/libs/event-bus-core',
+  coverageDirectory: '../../coverage/libs/event-bus-core-old',
 };

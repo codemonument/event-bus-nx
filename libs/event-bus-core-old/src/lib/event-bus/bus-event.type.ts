@@ -61,13 +61,13 @@ export type payloadOf<eventType> = ExtractGenericArgument<eventType>;
  */
 
 export interface NewableBusEvent<
-  eventType extends BusEvent<payloadOf<eventType>>,
+  eventType extends BusEvent<payloadOf<eventType>>
 > {
   // payloadType - Define that the constructor gets a Payload
   // Type of the payload is not so clear here,
   // could be of type EventualPayload<P>
   // or simply type: payloadType
   new <payloadType extends payloadOf<eventType>>(
-    payload: payloadType,
+    payload: payloadType
   ): eventType;
 }

@@ -1,10 +1,10 @@
-import { BusEvent } from "../index";
+import { BusEvent } from '../index';
 
 /**
  * For testing events without payload
  */
 export class PlainEvent extends BusEvent<void> {
-  public type = "PlainEvent";
+  public type = 'PlainEvent';
 }
 
 /**
@@ -15,5 +15,5 @@ export interface DemoPayload {
 }
 
 export class EventWithPayload extends BusEvent<DemoPayload> {
-  public type = "EventWithPayload";
+  public type = 'EventWithPayload';
 }
