@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`event-bus-group.test should trigger custom error callback in EventBusGroup 1`] = `[Error: Fake error in callback!]`;

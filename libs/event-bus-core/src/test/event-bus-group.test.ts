@@ -49,5 +49,45 @@ describe(`event-bus-group.test`, () => {
     eGroup.unsubscribeAll();
   });
 
+  /**
+   * Note: Cannot catch error like this, because the default error callback will not be thrown in the eBus.emit callstack,
+   * but in the callstack triggering the callback in eGroup.on().
+   *
+   * => This can be avoided by the user if he
+   * - either passes a global error callback when instantiating new EventBusGroup,
+   * - or adding an errorCallback directly inside the eGroup.on() function.
+   */
+  // it(`should trigger default error callback`, (done) => {
+  //   const eBus = new EventBus();
+  //   const eGroup = new EventBusGroup(eBus);
+
+  //   eGroup.on(PlainEvent, () => {
+  //     throw new Error(`Fake error in callback!`);
+  //   });
+
+  //   try {
+  //     eBus.emit(new PlainEvent());
+  //   } catch (error) {
+  //     expect(error).toBeDefined();
+  //     done();
+  //   }
+  // });
+
+  it(`should trigger custom error callback in EventBusGroup`, (done) => {
+    const errHandler = (error: unknown) => {
+      expect(error).toBeDefined();
+      expect(error).toMatchSnapshot();
+      done();
+    };
+    const eBus = new EventBus();
+    const eGroup = new EventBusGroup(eBus, errHandler);
+
+    eGroup.on(PlainEvent, () => {
+      throw new Error(`Fake error in callback!`);
+    });
+
+    eBus.emit(new PlainEvent());
+  });
+
   // TODO: Finish EventBusGroup Tests!
 });
