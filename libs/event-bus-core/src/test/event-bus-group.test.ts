@@ -33,5 +33,21 @@ describe(`event-bus-group.test`, () => {
     eBus.emit(demoEvent);
   });
 
+  it(`should unsubscribe all event callbacks`, () => {
+    const eBus = new EventBus();
+    const eGroup = new EventBusGroup(eBus);
+
+    eGroup.on(PlainEvent, () => {
+      console.log("Received Plain Event");
+    });
+
+    eGroup.on(EventWithPayload, (payload) => {
+      console.log("Received Event with Payload", payload);
+    });
+
+    // this should not throw - test fails if it does throw
+    eGroup.unsubscribeAll();
+  });
+
   // TODO: Finish EventBusGroup Tests!
 });

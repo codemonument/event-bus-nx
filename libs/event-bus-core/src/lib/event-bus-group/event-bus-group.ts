@@ -1,16 +1,16 @@
-import { Subscription } from 'rxjs';
-import { EventBus } from '../event-bus/event-bus';
+import { Subscription } from "rxjs";
+import { EventBus } from "../event-bus/event-bus";
 import {
   BusEvent,
   EventualPayload,
   NewableBusEvent,
   payloadOf,
-} from '../event-bus/bus-event.type';
+} from "../event-bus/bus-event.type";
 import {
   defaultErrorCallback,
   EventGroupCallback,
   EventGroupErrorCallback,
-} from './event-group-callbacks.type';
+} from "./event-group-callbacks.type";
 
 /**
  * An EventBusGroup allows for using the event bus with a Callback-Interface.
@@ -24,7 +24,7 @@ export class EventBusGroup {
 
   constructor(
     private bus: EventBus,
-    private errorCallback: EventGroupErrorCallback = defaultErrorCallback
+    private errorCallback: EventGroupErrorCallback = defaultErrorCallback,
   ) {}
 
   /**
@@ -49,7 +49,7 @@ export class EventBusGroup {
     typeFilter: NewableBusEvent<E>,
     callback: EventGroupCallback<payloadOf<E>>,
     callbackContext: unknown = null,
-    errorCallback?: EventGroupErrorCallback
+    errorCallback?: EventGroupErrorCallback,
   ): void {
     const next = (eventPayload: EventualPayload<payloadOf<E>>) => {
       try {
