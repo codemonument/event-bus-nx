@@ -2,7 +2,6 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "event-bus-core": "libs/event-bus-core",
-    "event-bus-core-old": "libs/event-bus-core-old"
+    "event-bus-core": "libs/event-bus-core"
   }
 }

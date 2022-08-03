@@ -17,6 +17,7 @@ _Reason: Problems with swc compilation in jest testing! :(_
 
 1. `nx g @nrwl/workspace:mv --projectName event-bus-core --destination event-bus-core-old --importPath scrap`
 2. `nx generate @nrwl/js:library --name=event-bus-core --publishable --tags=type:lib,project:event-bus-core --importPath @codemonument/event-bus-core --pascalCaseFiles --strict --config project --compiler tsc --skipTypeCheck`
+3. `nx g @nrwl/workspace:rm event-bus-core-old`
 
 ## 2022-07-20 libs/event-bus-core
 
