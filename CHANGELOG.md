@@ -2,6 +2,10 @@
 
 The changelog for this event-bus-nx repo.
 
+## @codemonument/event-bus-core@1.0.0-beta.2
+
+- more tests for EventBusGroup (callback based event bus consumer)
+
 ## @codemonument/event-bus-core@1.0.0-beta.1
 
 _initial release_

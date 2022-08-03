@@ -16,7 +16,7 @@
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs event-bus-core {args.ver} {args.tag}"
+        "command": "npm publish --public dist/libs/event-bus-core"
       },
       "dependsOn": [
         {
@@ -24,6 +24,12 @@
           "target": "build"
         }
       ]
+    },
+    "deploy": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "nx publish event-bus-core"
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
