@@ -3,30 +3,14 @@ import {
   EventualPayload,
   NewableBusEvent,
   payloadOf,
-} from "./bus-event.type";
+} from "../index";
 import { expectAssignable, expectNotAssignable, expectType } from "tsd";
-import { SimpleNewable } from "./simple-newable.type";
-
-/**
- * For testing events without payload
- */
-class PlainEvent extends BusEvent<void> {
-  public type = "PlainEvent";
-}
-
-/**
- * For testing events with payload
- */
-interface DemoPayloadType {
-  name: string;
-}
-class EventWithPayload extends BusEvent<DemoPayloadType> {
-  public type = "EventWithPayload";
-}
+import { SimpleNewable } from "../lib/event-bus/simple-newable.type";
+import { DemoPayload, EventWithPayload, PlainEvent } from "./test-events.types";
 
 describe(`EventualPayload`, () => {
-  it(`should not accept assigning undefined to EventualPayload<DemoPayloadType>`, () => {
-    expectNotAssignable<EventualPayload<DemoPayloadType>>(undefined);
+  it(`should not accept assigning undefined to EventualPayload<DemoPayload>`, () => {
+    expectNotAssignable<EventualPayload<DemoPayload>>(undefined);
   });
   it(`should accept assigning undefined to EventualPayload<void>`, () => {
     expectAssignable<EventualPayload<void>>(undefined);
@@ -56,14 +40,14 @@ describe(`bus-event.type`, () => {
    * the user of EventWithpayload is forced to provide a value of type T.
    */
   it(`should allow event construction with payload (=any)`, () => {
-    const payload: DemoPayloadType = { name: "Bob" };
+    const payload: DemoPayload = { name: "Bob" };
     // Note: If you remove the param, typescript will complain,
     // that you need to provide a value for the payload!
     const event = new EventWithPayload(payload);
     expect(event.payload).toStrictEqual(payload);
 
     // Type Expectations
-    expectType<DemoPayloadType>(event.payload);
+    expectType<DemoPayload>(event.payload);
   });
 
   it(`PlainEvent should be compareable with instanceof`, () => {
@@ -72,7 +56,7 @@ describe(`bus-event.type`, () => {
   });
 
   it(`EventWithPayload should be compareable with instanceof`, () => {
-    const payload: DemoPayloadType = { name: "Bob" };
+    const payload: DemoPayload = { name: "Bob" };
     const event = new EventWithPayload(payload);
     expect(event instanceof EventWithPayload).toBeTruthy();
   });
@@ -109,7 +93,7 @@ describe(`bus-event.type`, () => {
     const demoEvent = new EventWithPayload(demoPayload);
 
     // Ensures that demoEvent is a valid BusEvent
-    expectType<BusEvent<DemoPayloadType>>(demoEvent);
+    expectType<BusEvent<DemoPayload>>(demoEvent);
 
     // Ensures, that the extracted generic type argument of EventWithPayload is the same as the type of demoPayload variable
     expectType<payloadOf<EventWithPayload>>(demoPayload);

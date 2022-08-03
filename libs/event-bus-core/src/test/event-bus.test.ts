@@ -1,24 +1,9 @@
-import { EventBus } from "./event-bus";
-import { BusEvent, EventualPayload, payloadOf } from "./bus-event.type";
+import { EventBus } from "../lib/event-bus/event-bus";
+import { EventualPayload, payloadOf } from "../index";
 import { Observable, take } from "rxjs";
 import { expectType } from "tsd";
 
-/**
- * For testing events without payload
- */
-class PlainEvent extends BusEvent<void> {
-  public type = "PlainEvent";
-}
-
-/**
- * For testing events with payload
- */
-interface DemoPayload {
-  name: string;
-}
-class EventWithPayload extends BusEvent<DemoPayload> {
-  public type = "EventWithPayload";
-}
+import { DemoPayload, EventWithPayload, PlainEvent } from "./test-events.types";
 
 describe("EventBus", () => {
   it("should instantiate EventBus", () => {
