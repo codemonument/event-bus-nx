@@ -5,6 +5,14 @@
     "declaration": true,
     "types": []
   },
-  "include": ["**/*.ts"],
-  "exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
+  "include": [
+    "**/*.ts",
+    "../event-bus-core/src/index.ts",
+    "../event-bus-core/src/index.test.ts"
+  ],
+  "exclude": [
+    "jest.config.ts",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }
