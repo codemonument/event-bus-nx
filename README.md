@@ -4,11 +4,18 @@ A NX Monorepo for a typed event-bus implementation
 
 ---
 
+## Todos
+
+- Add Types BusRequest and BusResponse + sendAndwaitForResponse method
+
 ## Usefull Stuff
 
 - Generate a run-commands target:  
   `nx g @nrwl/workspace:run-command --name typecheck --project event-bus-core --command "tsc --noEmit"`
-
+  
+——-  
+  
+ 
 # Repo Log
 
 ## 2022-08-03 libs/event-bus-core - convert back from swc to tsc compilation
