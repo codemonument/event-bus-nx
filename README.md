@@ -8,6 +8,10 @@ A NX Monorepo for a typed event-bus implementation
 
 - Add Types BusRequest and BusResponse + sendAndwaitForResponse method
 
+- TODO: Switch to a git repo: event-bus-core (based on deno & evt)
+  => much easier to generate npm package via dnt which works also in node and in browser!
+  => much easier dev setup than nx!
+
 ## Usefull Stuff
 
 - Generate a run-commands target:  
