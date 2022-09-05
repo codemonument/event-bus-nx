@@ -1,13 +1,14 @@
-import { Tree, updateJson } from "@nrwl/devkit";
+import { readJson, Tree, writeJson } from "@nrwl/devkit";
 
 export default async function (tree: Tree, schema: any) {
-  updateJson(tree, "dist/libs/event-bus-core/esm/package.json", (pkgJson) => {
-    pkgJson.type = "module";
-    delete pkgJson.main;
-    pkgJson.exports = {
-      "import": "./src/index.js",
-    };
-    // return modified JSON object
-    return pkgJson;
-  });
+  const pkgJson = readJson(tree, "dist/libs/event-bus-core/esm/package.json");
+
+  pkgJson.type = "module";
+  delete pkgJson.main;
+  pkgJson.exports = {
+    "import": "./esm/src/index.js",
+    "require": "./cjs/src/index.js",
+  };
+
+  writeJson(tree, "dist/libs/event-bus-core/package.json", pkgJson);
 }
