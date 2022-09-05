@@ -4,6 +4,37 @@
   "projectType": "library",
   "targets": {
     "build": {
+      "executor": "@nrwl/js:tsc",
+      "options": {
+        "main": "libs/event-bus-core/src/index.ts",
+        "outputPath": "dist/libs/event-bus-core",
+        "tsConfig": "libs/event-bus-core/tsconfig.lib.types-only.json",
+        "deleteOutputPath": false
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build-rollup"
+        }
+      ]
+    },
+    "build-rollup": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "project": "libs/event-bus-core/package.json",
+        "entryFile": "libs/event-bus-core/src/index.ts",
+        "outputPath": "dist/libs/event-bus-core",
+        "deleteOutputPath": true,
+        "tsConfig": "libs/event-bus-core/tsconfig.lib.json",
+        "format": [
+          "esm",
+          "cjs"
+        ],
+        "compiler": "swc"
+      }
+    },
+    "build-old": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "command": "nx workspace-generator pkg-esm-build"
