@@ -9,11 +9,16 @@
         "command": "nx workspace-generator pkg-esm-build"
       },
       "dependsOn": [
-        { "projects": "self", "target": "build-esm" },
-        { "projects": "self", "target": "build-cjs" }
+        {
+          "projects": "self",
+          "target": "build-esm"
+        },
+        {
+          "projects": "self",
+          "target": "build-cjs"
+        }
       ]
     },
-
     "build-esm": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
