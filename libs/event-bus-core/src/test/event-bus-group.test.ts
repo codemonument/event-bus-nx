@@ -121,6 +121,4 @@ describe(`event-bus-group.test`, () => {
 
     eBus.emit(new PlainEvent());
   });
-
-  // TODO: Finish EventBusGroup Tests!
 });
