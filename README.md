@@ -4,12 +4,17 @@ A NX Monorepo for a typed event-bus implementation
 
 ---
 
+## Todos
+
+- Add Types BusRequest and BusResponse + sendAndwaitForResponse method
+
 ## Usefull Stuff
 
 - Generate a run-commands target:  
   `nx g @nrwl/workspace:run-command --name typecheck --project event-bus-core --command "tsc --noEmit"`
-
 - Deploy Libs: `nx run event-bus-core:deploy --otp=124965`
+
+——-
 
 # Repo Log
 
