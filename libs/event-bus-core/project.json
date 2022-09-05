@@ -3,13 +3,23 @@
   "sourceRoot": "libs/event-bus-core/src",
   "projectType": "library",
   "targets": {
-    "build": {
+    "build-esm": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/event-bus-core",
+        "outputPath": "dist/libs/event-bus-core/esm",
         "main": "libs/event-bus-core/src/index.ts",
         "tsConfig": "libs/event-bus-core/tsconfig.lib.json",
+        "assets": ["libs/event-bus-core/*.md"]
+      }
+    },
+    "build-cjs": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/event-bus-core/cjs",
+        "main": "libs/event-bus-core/src/index.ts",
+        "tsConfig": "libs/event-bus-core/tsconfig.lib-cjs.json",
         "assets": ["libs/event-bus-core/*.md"]
       }
     },
