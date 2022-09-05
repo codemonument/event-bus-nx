@@ -4,12 +4,9 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "main": "libs/event-bus-core/src/index.ts",
-        "outputPath": "dist/libs/event-bus-core",
-        "tsConfig": "libs/event-bus-core/tsconfig.lib.types-only.json",
-        "deleteOutputPath": false
+        "command": "npx tsc --p libs/event-bus-core/tsconfig.lib.types-only.json"
       },
       "dependsOn": [
         {
@@ -25,8 +22,10 @@
         "project": "libs/event-bus-core/package.json",
         "entryFile": "libs/event-bus-core/src/index.ts",
         "outputPath": "dist/libs/event-bus-core",
-        "deleteOutputPath": true,
         "tsConfig": "libs/event-bus-core/tsconfig.lib.json",
+        "generateExportsField": true,
+        "deleteOutputPath": true,
+        "javascriptEnabled": false,
         "format": [
           "esm",
           "cjs"

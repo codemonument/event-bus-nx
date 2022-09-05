@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outFile": "../../dist/libs/event-bus-core/index.d.ts",
     "declaration": true,
     "target": "es2020",
     "module": "es2020",
